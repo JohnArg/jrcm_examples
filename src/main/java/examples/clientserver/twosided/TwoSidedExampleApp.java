@@ -1,4 +1,7 @@
-package examples.twosided.clientserver;
+package examples.clientserver.twosided;
+
+import examples.clientserver.twosided.client.TwoSidedClient;
+import examples.clientserver.twosided.server.TwoSidedServer;
 
 import java.io.IOException;
 

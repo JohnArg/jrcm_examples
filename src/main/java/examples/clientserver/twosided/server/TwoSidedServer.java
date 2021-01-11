@@ -1,30 +1,39 @@
-package examples.twosided.clientserver;
+package examples.clientserver.twosided.server;
 
 import com.ibm.disni.RdmaActiveEndpointGroup;
+
 import com.ibm.disni.RdmaServerEndpoint;
-import jarg.rdmarpc.connections.RpcBasicEndpoint;
-import jarg.rdmarpc.connections.WorkCompletionHandler;
+import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A server that uses two-sided RDMA communications to talk with clients.
+ */
 public class TwoSidedServer {
+    private static final Logger logger = LoggerFactory.getLogger(TwoSidedServer.class);
 
     private String serverHost;
     private String serverPort;
-    private RdmaActiveEndpointGroup<RpcBasicEndpoint> endpointGroup;
+    private RdmaActiveEndpointGroup<ActiveRdmaCommunicator> endpointGroup;
     private ServerEndpointFactory factory;
-    private RdmaServerEndpoint<RpcBasicEndpoint> serverEndpoint;
-    private WorkCompletionHandler completionHandler;
-    private List<RpcBasicEndpoint> clients;
+    private RdmaServerEndpoint<ActiveRdmaCommunicator> serverEndpoint;
+    private List<ActiveRdmaCommunicator> clients;
 
     public TwoSidedServer(String host, String port){
         this.serverHost = host;
         this.serverPort = port;
     }
 
+    /**
+     * Initializes server properties.
+     * @throws Exception
+     */
     public void init() throws Exception {
         // Settings
         int timeout = 1000;
@@ -51,11 +60,15 @@ public class TwoSidedServer {
                 + serverSockAddr.toString());
     }
 
+    /**
+     * Runs the server operation.
+     * @throws Exception
+     */
     public void operate() throws Exception {
 
         while(true){
             // accept client connection
-            RpcBasicEndpoint clientEndpoint = serverEndpoint.accept();
+            ActiveRdmaCommunicator clientEndpoint = serverEndpoint.accept();
             clients.add(clientEndpoint);
 
             System.out.println("Client connection accepted. Client : "
@@ -68,14 +81,14 @@ public class TwoSidedServer {
     public void finalize(){
         //Cleanup -------------------------------------------
         try {
-            for (RpcBasicEndpoint clientEndpoint : clients) {
+            for (ActiveRdmaCommunicator clientEndpoint : clients) {
                 clientEndpoint.close();
             }
             serverEndpoint.close();
             endpointGroup.close();
-            System.out.println("Server is shut down");
+            logger.info("Server is shut down");
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Error in shutting down server.", e);
         }
     }
 }
