@@ -17,10 +17,6 @@ import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequest
 public class ServerCompletionHandler extends AbstractWorkCompletionHandler {
     private static final Logger logger = LoggerFactory.getLogger(ServerCompletionHandler.class);
 
-    public ServerCompletionHandler(AbstractWorkRequestProxyProvider proxyProvider) {
-        super(proxyProvider);
-    }
-
     @Override
     public void handleCqEvent(IbvWC workCompletionEvent) {
         // associate event with a Work Request

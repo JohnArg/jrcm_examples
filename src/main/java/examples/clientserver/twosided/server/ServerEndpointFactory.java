@@ -33,14 +33,13 @@ public class ServerEndpointFactory implements RdmaEndpointFactory<ActiveRdmaComm
     public ActiveRdmaCommunicator createEndpoint(RdmaCmId id, boolean serverSide) throws IOException {
         //set endpoint dependencies
         RdmaCommunicatorDependencies dependencies = new RdmaCommunicatorDependencies();
-        QueuedProxyProvider proxyProvider = new QueuedProxyProvider(maxWorkRequests);
 
         dependencies.setMaxBufferSize(maxBufferSize)
                 .setMaxWorkRequests(maxWorkRequests)
-                .setProxyProvider(proxyProvider)
+                .setProxyProvider( new QueuedProxyProvider(maxWorkRequests))
                 .setBufferManager(new TwoSidedBufferManager(maxBufferSize, maxWorkRequests))
                 .setSvcManager(new TwoSidedSVCManager(maxBufferSize, maxWorkRequests))
-                .setWorkCompletionHandler(new ServerCompletionHandler(proxyProvider));
+                .setWorkCompletionHandler(new ServerCompletionHandler());
 
         return new ActiveRdmaCommunicator(endpointGroup, id, serverSide, dependencies);
     }

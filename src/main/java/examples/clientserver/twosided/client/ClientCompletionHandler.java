@@ -19,8 +19,7 @@ public class ClientCompletionHandler extends AbstractWorkCompletionHandler {
     private int ACK_COUNT;      // how many ACKs we got
     private int MAX_ACKS;       // how many ACKs to expect
 
-    public ClientCompletionHandler(AbstractWorkRequestProxyProvider proxyProvider, int maxACKs){
-        super(proxyProvider);
+    public ClientCompletionHandler(int maxACKs){
         ACK_COUNT = 0;
         MAX_ACKS = maxACKs;
     }
