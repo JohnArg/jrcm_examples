@@ -26,7 +26,7 @@ public class InetAddressSerializer extends AbstractDataSerializer {
     }
 
     @Override
-    public void writeToWorkRequestBuffer() {
+    public void writeToWorkRequestBuffer() throws RpcDataSerializationException{
         ByteBuffer buffer = getWorkRequestProxy().getBuffer();
         // first write the serial version
         buffer.putLong(serialVersionId);

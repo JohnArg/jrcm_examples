@@ -16,7 +16,7 @@ import java.util.List;
  * A server that uses two-sided RDMA communications to talk with clients.
  */
 public class TwoSidedServer {
-    private static final Logger logger = LoggerFactory.getLogger(TwoSidedServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(TwoSidedServer.class.getSimpleName());
 
     private String serverHost;
     private String serverPort;
@@ -56,7 +56,7 @@ public class TwoSidedServer {
         InetSocketAddress serverSockAddr = new InetSocketAddress(serverIp,
                 Integer.parseInt(serverPort));
         serverEndpoint.bind(serverSockAddr, 10);
-        System.out.println("Server bound to address : "
+        logger.info("Server bound to address : "
                 + serverSockAddr.toString());
     }
 
@@ -70,8 +70,7 @@ public class TwoSidedServer {
             // accept client connection
             ActiveRdmaCommunicator clientEndpoint = serverEndpoint.accept();
             clients.add(clientEndpoint);
-
-            System.out.println("Client connection accepted. Client : "
+            logger.info("Client connection accepted. Client : "
                     + clientEndpoint.getDstAddr().toString());
         }
 

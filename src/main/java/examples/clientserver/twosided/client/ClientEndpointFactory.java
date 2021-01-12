@@ -1,8 +1,5 @@
 package examples.clientserver.twosided.client;
 
-
-
-
 import com.ibm.disni.RdmaActiveEndpointGroup;
 import com.ibm.disni.RdmaEndpointFactory;
 import com.ibm.disni.verbs.RdmaCmId;

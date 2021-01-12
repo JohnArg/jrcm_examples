@@ -1,12 +1,15 @@
 package examples.clientserver.twosided.server;
 
 import com.ibm.disni.verbs.IbvWC;
+import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
 import jarg.rdmarpc.networking.dependencies.netrequests.AbstractWorkCompletionHandler;
-import jarg.rdmarpc.networking.dependencies.netrequests.AbstractWorkRequestProxyProvider;
 import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 import java.nio.ByteBuffer;
+
 import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_RECV;
 import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_SEND_SIGNALED;
 
@@ -15,7 +18,7 @@ import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequest
  * Handles the completion of networking requests for a server RDMA endpoint.
  */
 public class ServerCompletionHandler extends AbstractWorkCompletionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(ServerCompletionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(ServerCompletionHandler.class.getSimpleName());
 
     @Override
     public void handleCqEvent(IbvWC workCompletionEvent) {
@@ -58,7 +61,20 @@ public class ServerCompletionHandler extends AbstractWorkCompletionHandler {
         WorkRequestProxy receiveProxy = getProxyProvider().getWorkRequestProxyForWc(workCompletionEvent);
         // Must free the request
         receiveProxy.releaseWorkRequest();
-        logger.error("Error in network request completion");
+        // Status 5 can happen on remote side disconnect, since we have already posted
+        // RECV requests for that remote side. We can simply close the remote endpoint
+        // at this point.
+        if(workCompletionEvent.getStatus() == IbvWC.IbvWcStatus.IBV_WC_WR_FLUSH_ERR.ordinal()){
+            ActiveRdmaCommunicator communicator = (ActiveRdmaCommunicator) receiveProxy.getEndpoint();
+            try {
+                communicator.close();
+            } catch (IOException | InterruptedException e) {
+                logger.error("Error in closing endpoint.", e);
+            }
+        }else{
+            logger.error("Error in network request "+ workCompletionEvent.getWr_id()
+                    + " of status : " + workCompletionEvent.getStatus());
+        }
     }
 
 }

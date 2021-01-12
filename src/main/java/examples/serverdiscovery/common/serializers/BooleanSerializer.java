@@ -25,7 +25,7 @@ public class BooleanSerializer extends AbstractDataSerializer {
     }
 
     @Override
-    public void writeToWorkRequestBuffer() {
+    public void writeToWorkRequestBuffer() throws RpcDataSerializationException{
         ByteBuffer buffer = getWorkRequestProxy().getBuffer();
         buffer.putLong(serialVersionId);
         if (flag) {

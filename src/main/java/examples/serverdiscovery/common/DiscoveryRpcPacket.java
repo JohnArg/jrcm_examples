@@ -30,7 +30,7 @@ public class DiscoveryRpcPacket extends AbstractRpcPacket {
      ********************************************************* */
 
     @Override
-    public void writeToWorkRequestBuffer(RpcDataSerializer payloadSerializer){
+    public void writeToWorkRequestBuffer(RpcDataSerializer payloadSerializer) throws RpcDataSerializationException{
         ByteBuffer packetBuffer = getWorkRequestProxy().getBuffer();
         // write the headers first
         packetHeaders.writeToWorkRequestBuffer();

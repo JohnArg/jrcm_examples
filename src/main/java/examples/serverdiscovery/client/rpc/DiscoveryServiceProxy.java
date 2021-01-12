@@ -10,6 +10,7 @@ import examples.serverdiscovery.common.serializers.InetSocketAddressListSerializ
 import jarg.rdmarpc.networking.communicators.RdmaCommunicator;
 import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
 import jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType;
+import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
 import jarg.rdmarpc.rpc.packets.RpcMessageType;
 import jarg.rdmarpc.rpc.request.RequestIdGenerator;
 import org.slf4j.Logger;
@@ -48,7 +49,13 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
                 new InetSocketAddressListSerializer(requestPacket.getWorkRequestProxy());
         parameterSerializer.setAddresses(Collections.singletonList(serverAddress));
         // Serialize the whole packet into the Work Request buffer
-        requestPacket.writeToWorkRequestBuffer(parameterSerializer);
+        try {
+            requestPacket.writeToWorkRequestBuffer(parameterSerializer);
+        } catch (RpcDataSerializationException e) {
+            requestPacket.getWorkRequestProxy().releaseWorkRequest();
+            logger.error("Cannot serialize RPC packet.", e);
+            return null;
+        }
         // Send the Work Request to the NIC
         rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
         // Wait for RPC response
@@ -72,7 +79,13 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
                 new InetSocketAddressListSerializer(requestPacket.getWorkRequestProxy());
         parameterSerializer.setAddresses(Collections.singletonList(serverAddress));
         // Serialize the whole packet into the Work Request buffer
-        requestPacket.writeToWorkRequestBuffer(parameterSerializer);
+        try {
+            requestPacket.writeToWorkRequestBuffer(parameterSerializer);
+        } catch (RpcDataSerializationException e) {
+            requestPacket.getWorkRequestProxy().releaseWorkRequest();
+            logger.error("Cannot serialize RPC packet.", e);
+            return false;
+        }
         // Send the Work Request to the NIC
         rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
         // Wait for RPC response
@@ -92,7 +105,13 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
     public List<InetSocketAddress> getRegisteredServers() {
         DiscoveryRpcPacket requestPacket = generateRequestPacket(DiscoveryOperationType.GET_SERVERS);
         // Serialize the whole packet into the Work Request buffer
-        requestPacket.writeToWorkRequestBuffer(null);
+        try {
+            requestPacket.writeToWorkRequestBuffer(null);
+        } catch (RpcDataSerializationException e) {
+            requestPacket.getWorkRequestProxy().releaseWorkRequest();
+            logger.error("Cannot serialize RPC packet.", e);
+            return null;
+        }
         // Send the Work Request to the NIC
         rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
         // Wait for RPC response
@@ -116,7 +135,13 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
                 new InetAddressSerializer(requestPacket.getWorkRequestProxy());
         parameterSerializer.setAddress(ipAddress);
         // Serialize the whole packet into the Work Request buffer
-        requestPacket.writeToWorkRequestBuffer(parameterSerializer);
+        try {
+            requestPacket.writeToWorkRequestBuffer(parameterSerializer);
+        } catch (RpcDataSerializationException e) {
+            requestPacket.getWorkRequestProxy().releaseWorkRequest();
+            logger.error("Cannot serialize RPC packet.", e);
+            return -1;
+        }
         // Send the Work Request to the NIC
         rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
         // Wait for RPC response

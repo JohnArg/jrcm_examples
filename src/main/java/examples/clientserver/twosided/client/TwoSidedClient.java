@@ -17,7 +17,7 @@ import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequest
  * A client that uses two-sided RDMA operations to communicate with a server.
  */
 public class TwoSidedClient {
-    private static final Logger logger = LoggerFactory.getLogger(TwoSidedClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(TwoSidedClient.class.getSimpleName());
 
     private String serverHost;
     private String serverPort;
@@ -47,7 +47,7 @@ public class TwoSidedClient {
         // Create endpoint
         endpointGroup =  new RdmaActiveEndpointGroup<>(timeout, polling,
                 maxWRs, maxSge, cqSize);
-        factory = new ClientEndpointFactory(endpointGroup,maxBufferSize, maxWRs, messagesToSend);
+        factory = new ClientEndpointFactory(endpointGroup, maxBufferSize, maxWRs, messagesToSend);
         endpointGroup.init(factory);
         clientEndpoint = endpointGroup.createEndpoint();
     }
@@ -63,7 +63,7 @@ public class TwoSidedClient {
         InetSocketAddress serverSockAddr = new InetSocketAddress(serverIp,
                 Integer.parseInt(serverPort));
         clientEndpoint.connect(serverSockAddr, 1000);
-        System.out.println("Client connected to server in address : "
+        logger.info("Client connected to server in address : "
                 + clientEndpoint.getDstAddr().toString());
 
         // send messages ------------------------------------

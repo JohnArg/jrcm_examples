@@ -6,6 +6,7 @@ import jarg.rdmarpc.networking.communicators.RdmaCommunicator;
 import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
 import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxyProvider;
 import jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType;
+import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
 import jarg.rdmarpc.rpc.packets.RpcMessageType;
 import jarg.rdmarpc.rpc.serialization.AbstractDataSerializer;
 import org.slf4j.Logger;
@@ -57,7 +58,13 @@ public class SinglePacketResponseTask implements Runnable{
             serializer.setWorkRequestProxy(workRequestProxy);
         }
         // Serialize the packet
-        responsePacket.writeToWorkRequestBuffer(serializer);
+        try {
+            responsePacket.writeToWorkRequestBuffer(serializer);
+        } catch (RpcDataSerializationException e) {
+            logger.error("Cannot serialize RPC packet.", e);
+            workRequestProxy.releaseWorkRequest();
+            return;
+        }
         // Time to send across the network
         endpoint.postNetOperationToNIC(workRequestProxy);
     }
