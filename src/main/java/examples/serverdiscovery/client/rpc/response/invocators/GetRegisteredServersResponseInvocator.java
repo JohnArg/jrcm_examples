@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class GetRegisteredServersResponseInvocator implements RpcOperationInvocator {
 
-    private final Logger logger = LoggerFactory.getLogger(GetRegisteredServersResponseInvocator.class);
+    private final Logger logger = LoggerFactory.getLogger(GetRegisteredServersResponseInvocator.class.getSimpleName());
 
     private InetSocketAddressListSerializer inetSocketAddressListSerializer;
     private PendingResponseManager responseManager;

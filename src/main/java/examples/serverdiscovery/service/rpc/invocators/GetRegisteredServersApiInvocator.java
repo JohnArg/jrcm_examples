@@ -23,7 +23,7 @@ import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequest
  */
 public class GetRegisteredServersApiInvocator extends AbstractThreadPoolInvocator {
 
-    private static final Logger logger = LoggerFactory.getLogger(GetRegisteredServersApiInvocator.class);
+    private static final Logger logger = LoggerFactory.getLogger(GetRegisteredServersApiInvocator.class.getSimpleName());
 
     private RdmaDiscoveryApi serviceApi;
 
@@ -44,8 +44,8 @@ public class GetRegisteredServersApiInvocator extends AbstractThreadPoolInvocato
         InetSocketAddressListSerializer responseSerializer = new InetSocketAddressListSerializer();
         responseSerializer.setAddresses(previousMembers);
         // send the response to the caller in another task
-        SinglePacketResponseTask responseTask = new SinglePacketResponseTask((DiscoveryRpcPacket) packet, responseSerializer,
-                TWO_SIDED_SEND_SIGNALED, false);
+        SinglePacketResponseTask responseTask = new SinglePacketResponseTask((DiscoveryRpcPacket) packet,
+                responseSerializer, TWO_SIDED_SEND_SIGNALED, false);
         getWorkersExecutor().submit(responseTask);
     }
 }

@@ -16,6 +16,7 @@ import java.net.InetSocketAddress;
 public class ServiceConnectionComponent {
     private static final Logger logger = LoggerFactory.getLogger(ServiceConnectionComponent.class);
 
+    RdmaActiveEndpointGroup<ActiveRdmaCommunicator> endpointGroup;
     private ActiveRdmaCommunicator rdmaCommunicator;
     private InetSocketAddress serviceAddress;
     // Rdma endpoint properties
@@ -44,7 +45,6 @@ public class ServiceConnectionComponent {
      */
     public boolean connect(){
         // An endpoint group is needed to create RDMA endpoints
-        RdmaActiveEndpointGroup<ActiveRdmaCommunicator> endpointGroup = null;
         try {
             endpointGroup = new RdmaActiveEndpointGroup<>(timeout, polling, maxWorkRequests, maxSge, cqSize);
         } catch (IOException e) {
@@ -74,6 +74,7 @@ public class ServiceConnectionComponent {
     public void shutdown(){
         try {
             rdmaCommunicator.close();
+            endpointGroup.close();
         } catch (IOException | InterruptedException e) {
            logger.error("Cannot close endpoint.", e);
         }

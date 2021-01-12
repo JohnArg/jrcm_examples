@@ -2,6 +2,7 @@ package examples.serverdiscovery.service.rpc.invocators;
 
 import examples.serverdiscovery.common.DiscoveryRpcPacket;
 import examples.serverdiscovery.common.RdmaDiscoveryApi;
+import examples.serverdiscovery.common.serializers.InetAddressSerializer;
 import examples.serverdiscovery.common.serializers.InetSocketAddressListSerializer;
 import examples.serverdiscovery.common.serializers.IntSerializer;
 import examples.serverdiscovery.service.rpc.response.SinglePacketResponseTask;
@@ -26,7 +27,7 @@ import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequest
  */
 public class GetServerPortByIpApiInvocator extends AbstractThreadPoolInvocator {
 
-    private static final Logger logger = LoggerFactory.getLogger(GetServerPortByIpApiInvocator.class);
+    private static final Logger logger = LoggerFactory.getLogger(GetServerPortByIpApiInvocator.class.getSimpleName());
 
     private RdmaDiscoveryApi serviceApi;
 
@@ -39,17 +40,17 @@ public class GetServerPortByIpApiInvocator extends AbstractThreadPoolInvocator {
     public void invokeOperationTask(AbstractRpcPacket packet) {
         // Pass the packet's work request data to the serializer
         WorkRequestProxy workRequestData = packet.getWorkRequestProxy();
-        InetSocketAddressListSerializer serializer = new InetSocketAddressListSerializer();
+        InetAddressSerializer serializer = new InetAddressSerializer();
         serializer.setWorkRequestProxy(workRequestData);
 
         try {
             // deserialize request parameters from the received packet
             serializer.readFromWorkRequestBuffer();
-            List<InetSocketAddress> addresses = serializer.getAddresses();
+            InetAddress address = serializer.getAddress();
             // Free WR id, we have the objects we need
             workRequestData.releaseWorkRequest();
             // invoke the service's API
-            int port = serviceApi.getServerPortByIp(addresses.get(0).getAddress());
+            int port = serviceApi.getServerPortByIp(address);
             // get a serializer for the response and set the response to it
             IntSerializer responseSerializer = new IntSerializer();
             responseSerializer.setValue(port);

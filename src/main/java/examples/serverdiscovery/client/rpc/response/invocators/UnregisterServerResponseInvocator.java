@@ -14,13 +14,14 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.CompletableFuture;
 
 public class UnregisterServerResponseInvocator implements RpcOperationInvocator {
-    private final Logger logger = LoggerFactory.getLogger(UnregisterServerResponseInvocator.class);
+    private final Logger logger = LoggerFactory.getLogger(UnregisterServerResponseInvocator.class.getSimpleName());
 
     private BooleanSerializer booleanSerializer;
     private PendingResponseManager responseManager;
 
     public UnregisterServerResponseInvocator(PendingResponseManager responseManager) {
         this.responseManager = responseManager;
+        booleanSerializer = new BooleanSerializer();
     }
 
     @Override

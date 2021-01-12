@@ -5,18 +5,17 @@ import examples.serverdiscovery.common.RdmaDiscoveryApi;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A registry service that will be used by RDMA-capable servers to discover each other.
  */
 public class RdmaDiscoveryApiImpl implements RdmaDiscoveryApi {
-    private final Set<InetSocketAddress> registeredServers;
+
+    private final List<InetSocketAddress> registeredServers;
 
     public RdmaDiscoveryApiImpl(){
-        registeredServers = new HashSet<>();
+        registeredServers = new ArrayList<>();
     }
 
     @Override

@@ -7,10 +7,14 @@ import examples.serverdiscovery.client.rpc.response.PendingResponseManager;
 import examples.serverdiscovery.common.DiscoveryCommunicatorDependencies;
 import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
 import jarg.rdmarpc.rpc.request.RequestIdGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class ClientComponent {
+    private static final Logger logger = LoggerFactory.getLogger(ClientComponent.class.getSimpleName());
 
     private ServiceConnectionComponent serviceConnectionComponent;
     private PendingResponseManager responseManager;
@@ -46,5 +50,19 @@ public class ClientComponent {
         requestIdGenerator = new DiscoveryRequestIdGenerator(0);
         return new DiscoveryServiceProxy(serviceConnectionComponent.getRdmaCommunicator(), responseManager,
                 requestIdGenerator);
+    }
+
+    public InetSocketAddress getClientAddress(){
+        InetSocketAddress address = null;
+        try {
+            address = (InetSocketAddress) serviceConnectionComponent.getRdmaCommunicator().getSrcAddr();
+        } catch (IOException e) {
+            logger.error("Cannot get this endpoint's InetSocket address.", e);
+        }
+        return address;
+    }
+
+    public void shutDown(){
+        serviceConnectionComponent.shutdown();
     }
 }

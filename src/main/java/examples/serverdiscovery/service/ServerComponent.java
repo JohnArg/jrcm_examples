@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
 public class ServerComponent {
     private static final Logger logger = LoggerFactory.getLogger(ServerComponent.class);
 
+    RdmaActiveEndpointGroup<ActiveRdmaCommunicator> endpointGroup;
     private List<ActiveRdmaCommunicator> inboundConnections;
     // server listening settings
     private InetSocketAddress listeningAddress;
@@ -54,7 +55,6 @@ public class ServerComponent {
 
     public void start(){
         // An endpoint group is needed to create RDMA endpoints
-        RdmaActiveEndpointGroup<ActiveRdmaCommunicator> endpointGroup = null;
         try {
             endpointGroup = new RdmaActiveEndpointGroup<>(timeout, polling, maxWorkRequests, maxSge, cqSize);
         } catch (IOException e) {
@@ -95,7 +95,11 @@ public class ServerComponent {
     public void shutdown(){
         requestProcessingWorkers.shutdown();
         try {
+            for (ActiveRdmaCommunicator clientEndpoint : inboundConnections) {
+                clientEndpoint.close();
+            }
             serverEndpoint.close();
+            endpointGroup.close();
             logger.info("Shutting down server.");
         } catch (IOException | InterruptedException e) {
             logger.error("Error in closing server endpoint.", e);

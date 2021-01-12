@@ -56,13 +56,14 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
             logger.error("Cannot serialize RPC packet.", e);
             return null;
         }
-        // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
-        // Wait for RPC response
+        // Save a CompletableFuture for the RPC response - Do this BEFORE sending the request!
         long operationId = requestPacket.getPacketHeaders().getOperationId();
         CompletableFuture<List<InetSocketAddress>> pendingResponse = new CompletableFuture<>();
         pendingResponseManager.registerServerPendingResponses().put(operationId, pendingResponse);
         List<InetSocketAddress> previousAddresses = null;
+        // Send the Work Request to the NIC
+        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        // Wait for response
         try {
             previousAddresses = pendingResponse.get();
         } catch (InterruptedException | ExecutionException e) {
@@ -86,13 +87,14 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
             logger.error("Cannot serialize RPC packet.", e);
             return false;
         }
-        // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
-        // Wait for RPC response
+        // Save a CompletableFuture for the RPC response - Do this BEFORE sending the request!
         long operationId = requestPacket.getPacketHeaders().getOperationId();
         CompletableFuture<Boolean> pendingResponse = new CompletableFuture<>();
         pendingResponseManager.unregisterServerPendingResponses().put(operationId, pendingResponse);
         boolean success = false;
+        // Send the Work Request to the NIC
+        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        // Wait for response
         try {
             success = pendingResponse.get();
         } catch (InterruptedException | ExecutionException e) {
@@ -112,13 +114,14 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
             logger.error("Cannot serialize RPC packet.", e);
             return null;
         }
-        // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
-        // Wait for RPC response
+        // Save a CompletableFuture for the RPC response - Do this BEFORE sending the request!
         long operationId = requestPacket.getPacketHeaders().getOperationId();
         CompletableFuture<List<InetSocketAddress>> pendingResponse = new CompletableFuture<>();
         pendingResponseManager.getRegisteredServersPendingResponses().put(operationId, pendingResponse);
         List<InetSocketAddress> previousAddresses = null;
+        // Send the Work Request to the NIC
+        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        // Wait for response
         try {
             previousAddresses = pendingResponse.get();
         } catch (InterruptedException | ExecutionException e) {
@@ -142,13 +145,14 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
             logger.error("Cannot serialize RPC packet.", e);
             return -1;
         }
-        // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
-        // Wait for RPC response
+        // Save a CompletableFuture for the RPC response - Do this BEFORE sending the request!
         long operationId = requestPacket.getPacketHeaders().getOperationId();
         CompletableFuture<Integer> pendingResponse = new CompletableFuture<>();
         pendingResponseManager.getServerPortByIpPendingResponses().put(operationId, pendingResponse);
         int port = -1;
+        // Send the Work Request to the NIC
+        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        // Wait for response
         try {
             port = pendingResponse.get();
         } catch (InterruptedException | ExecutionException e) {

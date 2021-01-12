@@ -28,7 +28,6 @@ public class InetSocketAddressListSerializer extends AbstractDataSerializer {
 
     public InetSocketAddressListSerializer(WorkRequestProxy workRequestProxy){
         super(workRequestProxy);
-        addresses = new ArrayList<>();
     }
 
 
@@ -53,6 +52,9 @@ public class InetSocketAddressListSerializer extends AbstractDataSerializer {
 
     @Override
     public void readFromWorkRequestBuffer() throws RpcDataSerializationException {
+        // must reset this to avoid errors
+        addresses = new ArrayList<>();
+        // get request buffer
         ByteBuffer buffer = getWorkRequestProxy().getBuffer();
         // check the serial version id
         long receivedSerialVersionId = buffer.getLong();

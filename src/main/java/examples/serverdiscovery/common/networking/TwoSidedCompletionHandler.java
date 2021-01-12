@@ -2,6 +2,7 @@ package examples.serverdiscovery.common.networking;
 
 import com.ibm.disni.verbs.IbvWC;
 import examples.serverdiscovery.common.DiscoveryRpcPacket;
+import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
 import jarg.rdmarpc.networking.dependencies.netrequests.AbstractWorkCompletionHandler;
 import jarg.rdmarpc.networking.dependencies.netrequests.AbstractWorkRequestProxyProvider;
 import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
@@ -9,6 +10,8 @@ import jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType;
 import jarg.rdmarpc.rpc.packets.PacketDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * Handles completion events of networking requests to the NIC. Such events
@@ -47,7 +50,12 @@ public class TwoSidedCompletionHandler extends AbstractWorkCompletionHandler {
         WorkRequestProxy workRequestProxy = getProxyProvider().getWorkRequestProxyForWc(workCompletionEvent);
         // Must free the request
         workRequestProxy.releaseWorkRequest();
-        logger.error("Error in network request completion");
+        // Status 5 can happen on remote side disconnect, since we have already posted
+        // RECV requests for that remote side.
+        if(workCompletionEvent.getStatus() != IbvWC.IbvWcStatus.IBV_WC_WR_FLUSH_ERR.ordinal()){
+            logger.error("Error in network request "+ workCompletionEvent.getWr_id()
+                    + " of status : " + workCompletionEvent.getStatus());
+        }
     }
 
     public PacketDispatcher<DiscoveryRpcPacket> getPacketPacketDispatcher() {

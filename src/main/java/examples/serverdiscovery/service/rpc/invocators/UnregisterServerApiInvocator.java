@@ -24,7 +24,7 @@ import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequest
  * the caller.
  */
 public class UnregisterServerApiInvocator extends AbstractThreadPoolInvocator {
-    private static final Logger logger = LoggerFactory.getLogger(UnregisterServerApiInvocator.class);
+    private static final Logger logger = LoggerFactory.getLogger(UnregisterServerApiInvocator.class.getSimpleName());
 
     private RdmaDiscoveryApi serviceApi;
 
