@@ -51,7 +51,7 @@ public class ServerCompletionHandler extends AbstractWorkCompletionHandler {
             }
             sendBuffer.flip();
             // send the response
-            responseProxy.getEndpoint().postNetOperationToNIC(responseProxy);
+            responseProxy.post();
         }
     }
 

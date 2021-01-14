@@ -85,7 +85,7 @@ public class TwoSidedClient {
             logger.info("Will send : "+text);
             sendBuffer.rewind();
             // send the data across
-            clientEndpoint.postNetOperationToNIC(workRequestProxy);
+            workRequestProxy.post();
         }
 
     }
