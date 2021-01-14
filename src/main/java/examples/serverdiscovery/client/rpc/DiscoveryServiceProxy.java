@@ -62,7 +62,7 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
         pendingResponseManager.registerServerPendingResponses().put(operationId, pendingResponse);
         List<InetSocketAddress> previousAddresses = null;
         // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        requestPacket.getWorkRequestProxy().post();
         // Wait for response
         try {
             previousAddresses = pendingResponse.get();
@@ -93,7 +93,7 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
         pendingResponseManager.unregisterServerPendingResponses().put(operationId, pendingResponse);
         boolean success = false;
         // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        requestPacket.getWorkRequestProxy().post();
         // Wait for response
         try {
             success = pendingResponse.get();
@@ -120,7 +120,7 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
         pendingResponseManager.getRegisteredServersPendingResponses().put(operationId, pendingResponse);
         List<InetSocketAddress> previousAddresses = null;
         // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        requestPacket.getWorkRequestProxy().post();
         // Wait for response
         try {
             previousAddresses = pendingResponse.get();
@@ -151,7 +151,7 @@ public class DiscoveryServiceProxy implements RdmaDiscoveryApi {
         pendingResponseManager.getServerPortByIpPendingResponses().put(operationId, pendingResponse);
         int port = -1;
         // Send the Work Request to the NIC
-        rdmaCommunicator.postNetOperationToNIC(requestPacket.getWorkRequestProxy());
+        requestPacket.getWorkRequestProxy().post();
         // Wait for response
         try {
             port = pendingResponse.get();
