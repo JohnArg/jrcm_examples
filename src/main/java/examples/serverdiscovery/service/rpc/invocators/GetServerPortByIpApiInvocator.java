@@ -6,10 +6,10 @@ import examples.serverdiscovery.common.serializers.InetAddressSerializer;
 import examples.serverdiscovery.common.serializers.InetSocketAddressListSerializer;
 import examples.serverdiscovery.common.serializers.IntSerializer;
 import examples.serverdiscovery.service.rpc.response.SinglePacketResponseTask;
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.invocation.AbstractThreadPoolInvocator;
-import jarg.rdmarpc.rpc.packets.AbstractRpcPacket;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.invocation.AbstractThreadPoolInvocator;
+import jarg.jrcm.rpc.packets.AbstractRpcPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_SEND_SIGNALED;
+import static jarg.jrcm.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_SEND_SIGNALED;
 
 /**
  * Reads information from an {@link DiscoveryRpcPacket}, deserializes parameters and invokes

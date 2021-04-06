@@ -1,8 +1,8 @@
 package examples.serverdiscovery.common;
 
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.serialization.AbstractDataSerializer;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.serialization.AbstractDataSerializer;
 
 import java.nio.ByteBuffer;
 

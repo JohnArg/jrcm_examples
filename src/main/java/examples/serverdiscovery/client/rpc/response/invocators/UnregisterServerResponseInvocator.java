@@ -4,10 +4,10 @@ import examples.serverdiscovery.client.rpc.response.PendingResponseManager;
 import examples.serverdiscovery.common.DiscoveryRpcPacket;
 import examples.serverdiscovery.common.DiscoveryRpcPacketHeaders;
 import examples.serverdiscovery.common.serializers.BooleanSerializer;
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.invocation.RpcOperationInvocator;
-import jarg.rdmarpc.rpc.packets.AbstractRpcPacket;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.invocation.RpcOperationInvocator;
+import jarg.jrcm.rpc.packets.AbstractRpcPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

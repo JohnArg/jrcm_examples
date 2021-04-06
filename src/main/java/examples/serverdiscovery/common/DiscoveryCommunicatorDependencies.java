@@ -1,8 +1,8 @@
 package examples.serverdiscovery.common;
 
 import examples.serverdiscovery.client.rpc.response.PendingResponseManager;
-import jarg.rdmarpc.networking.dependencies.RdmaCommunicatorDependencies;
-import jarg.rdmarpc.rpc.packets.PacketDispatcher;
+import jarg.jrcm.networking.dependencies.RdmaCommunicatorDependencies;
+import jarg.jrcm.rpc.packets.PacketDispatcher;
 
 public class DiscoveryCommunicatorDependencies extends RdmaCommunicatorDependencies {
 

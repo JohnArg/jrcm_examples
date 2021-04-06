@@ -1,16 +1,16 @@
 package examples.clientserver.twosided.client;
 
 import com.ibm.disni.verbs.IbvWC;
-import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
-import jarg.rdmarpc.networking.dependencies.netrequests.AbstractWorkCompletionHandler;
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.networking.communicators.impl.ActiveRdmaCommunicator;
+import jarg.jrcm.networking.dependencies.netrequests.AbstractWorkCompletionHandler;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_RECV;
-import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_SEND_SIGNALED;
+import static jarg.jrcm.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_RECV;
+import static jarg.jrcm.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_SEND_SIGNALED;
 
 /**
  * Handles the completion of networking requests for the client RDMA endpoints.
@@ -58,7 +58,7 @@ public class ClientCompletionHandler extends AbstractWorkCompletionHandler {
         // RECV requests for that remote side. We can simply close the remote endpoint
         // at this point.
         if(workCompletionEvent.getStatus() == IbvWC.IbvWcStatus.IBV_WC_WR_FLUSH_ERR.ordinal()){
-            ActiveRdmaCommunicator communicator = (ActiveRdmaCommunicator) workRequestProxy.getEndpoint();
+            ActiveRdmaCommunicator communicator = (ActiveRdmaCommunicator) workRequestProxy.getRdmaCommunicator();
             try {
                 communicator.close();
             } catch (IOException | InterruptedException e) {

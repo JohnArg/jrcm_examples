@@ -5,8 +5,8 @@ import examples.serverdiscovery.client.rpc.DiscoveryServiceProxy;
 import examples.serverdiscovery.client.rpc.request.DiscoveryRequestIdGenerator;
 import examples.serverdiscovery.client.rpc.response.PendingResponseManager;
 import examples.serverdiscovery.common.DiscoveryCommunicatorDependencies;
-import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
-import jarg.rdmarpc.rpc.request.RequestIdGenerator;
+import jarg.jrcm.networking.communicators.impl.ActiveRdmaCommunicator;
+import jarg.jrcm.rpc.request.RequestIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

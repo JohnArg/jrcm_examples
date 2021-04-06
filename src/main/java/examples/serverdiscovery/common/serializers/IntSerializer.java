@@ -1,8 +1,8 @@
 package examples.serverdiscovery.common.serializers;
 
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.serialization.AbstractDataSerializer;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.serialization.AbstractDataSerializer;
 
 import java.nio.ByteBuffer;
 
@@ -29,6 +29,7 @@ public class IntSerializer extends AbstractDataSerializer {
         ByteBuffer buffer = getWorkRequestProxy().getBuffer();
         buffer.putLong(serialVersionId);
         buffer.putInt(value);
+        buffer.flip();
     }
 
     @Override

@@ -3,7 +3,7 @@ package examples.serverdiscovery.service;
 import com.ibm.disni.RdmaActiveEndpointGroup;
 import com.ibm.disni.RdmaServerEndpoint;
 import examples.serverdiscovery.service.networking.ServiceCommunicatorFactory;
-import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
+import jarg.jrcm.networking.communicators.impl.ActiveRdmaCommunicator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

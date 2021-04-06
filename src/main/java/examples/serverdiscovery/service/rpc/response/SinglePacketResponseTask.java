@@ -2,13 +2,13 @@ package examples.serverdiscovery.service.rpc.response;
 
 import examples.serverdiscovery.common.DiscoveryRpcPacket;
 import examples.serverdiscovery.common.DiscoveryRpcPacketHeaders;
-import jarg.rdmarpc.networking.communicators.RdmaCommunicator;
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxyProvider;
-import jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.packets.RpcMessageType;
-import jarg.rdmarpc.rpc.serialization.AbstractDataSerializer;
+import jarg.jrcm.networking.communicators.RdmaCommunicator;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxyProvider;
+import jarg.jrcm.networking.dependencies.netrequests.types.WorkRequestType;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.packets.RpcMessageType;
+import jarg.jrcm.rpc.serialization.AbstractDataSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ public class SinglePacketResponseTask implements Runnable{
     @Override
     public void run() {
         // First, get the necessary information from the request's packet
-        RdmaCommunicator endpoint = requestPacket.getWorkRequestProxy().getEndpoint();
+        RdmaCommunicator endpoint = requestPacket.getWorkRequestProxy().getRdmaCommunicator();
         DiscoveryRpcPacketHeaders receivedPacketHeaders = requestPacket.getPacketHeaders();
         int invokedOperationType = receivedPacketHeaders.getOperationType();
         long invokedOperationId = receivedPacketHeaders.getOperationId();

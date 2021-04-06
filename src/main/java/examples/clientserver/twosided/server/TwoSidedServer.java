@@ -3,7 +3,7 @@ package examples.clientserver.twosided.server;
 import com.ibm.disni.RdmaActiveEndpointGroup;
 
 import com.ibm.disni.RdmaServerEndpoint;
-import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
+import jarg.jrcm.networking.communicators.impl.ActiveRdmaCommunicator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

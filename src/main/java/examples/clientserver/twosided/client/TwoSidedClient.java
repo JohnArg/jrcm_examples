@@ -1,8 +1,8 @@
 package examples.clientserver.twosided.client;
 
 import com.ibm.disni.RdmaActiveEndpointGroup;
-import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.networking.communicators.impl.ActiveRdmaCommunicator;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 
-import static jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_SEND_SIGNALED;
+import static jarg.jrcm.networking.dependencies.netrequests.types.WorkRequestType.TWO_SIDED_SEND_SIGNALED;
 
 /**
  * A client that uses two-sided RDMA operations to communicate with a server.

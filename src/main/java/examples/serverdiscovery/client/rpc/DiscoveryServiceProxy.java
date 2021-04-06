@@ -7,12 +7,12 @@ import examples.serverdiscovery.common.DiscoveryRpcPacketFactory;
 import examples.serverdiscovery.common.RdmaDiscoveryApi;
 import examples.serverdiscovery.common.serializers.InetAddressSerializer;
 import examples.serverdiscovery.common.serializers.InetSocketAddressListSerializer;
-import jarg.rdmarpc.networking.communicators.RdmaCommunicator;
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.networking.dependencies.netrequests.types.WorkRequestType;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.packets.RpcMessageType;
-import jarg.rdmarpc.rpc.request.RequestIdGenerator;
+import jarg.jrcm.networking.communicators.RdmaCommunicator;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.networking.dependencies.netrequests.types.WorkRequestType;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.packets.RpcMessageType;
+import jarg.jrcm.rpc.request.RequestIdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

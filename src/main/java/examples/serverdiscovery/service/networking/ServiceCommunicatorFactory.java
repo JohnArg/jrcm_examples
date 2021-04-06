@@ -7,13 +7,14 @@ import examples.serverdiscovery.common.DiscoveryCommunicatorDependencies;
 import examples.serverdiscovery.common.networking.TwoSidedCompletionHandler;
 import examples.serverdiscovery.service.api.RdmaDiscoveryApiImpl;
 import examples.serverdiscovery.service.rpc.DiscoveryServicePacketDispatcher;
-import jarg.rdmarpc.networking.communicators.impl.ActiveRdmaCommunicator;
-import jarg.rdmarpc.networking.dependencies.netbuffers.impl.TwoSidedBufferManager;
-import jarg.rdmarpc.networking.dependencies.netrequests.impl.QueuedProxyProvider;
-import jarg.rdmarpc.networking.dependencies.svc.impl.TwoSidedSVCManager;
+import jarg.jrcm.networking.communicators.impl.ActiveRdmaCommunicator;
+import jarg.jrcm.networking.dependencies.netbuffers.impl.TwoSidedBufferManager;
+import jarg.jrcm.networking.dependencies.netrequests.impl.QueuedProxyProvider;
+import jarg.jrcm.networking.dependencies.svc.impl.TwoSidedSVCManager;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
+
 
 public class ServiceCommunicatorFactory implements RdmaEndpointFactory<ActiveRdmaCommunicator> {
 

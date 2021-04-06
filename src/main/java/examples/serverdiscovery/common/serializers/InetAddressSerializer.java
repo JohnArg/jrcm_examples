@@ -1,8 +1,8 @@
 package examples.serverdiscovery.common.serializers;
 
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.serialization.AbstractDataSerializer;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.serialization.AbstractDataSerializer;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -36,6 +36,7 @@ public class InetAddressSerializer extends AbstractDataSerializer {
         buffer.putInt(addressBytes.length);
         // now put the address bytes
         buffer.put(addressBytes);
+        buffer.flip();
     }
 
     @Override

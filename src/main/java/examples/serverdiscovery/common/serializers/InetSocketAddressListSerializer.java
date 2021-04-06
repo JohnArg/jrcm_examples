@@ -1,8 +1,8 @@
 package examples.serverdiscovery.common.serializers;
 
-import jarg.rdmarpc.networking.dependencies.netrequests.WorkRequestProxy;
-import jarg.rdmarpc.rpc.exception.RpcDataSerializationException;
-import jarg.rdmarpc.rpc.serialization.AbstractDataSerializer;
+import jarg.jrcm.networking.dependencies.netrequests.WorkRequestProxy;
+import jarg.jrcm.rpc.exception.RpcDataSerializationException;
+import jarg.jrcm.rpc.serialization.AbstractDataSerializer;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -33,7 +33,7 @@ public class InetSocketAddressListSerializer extends AbstractDataSerializer {
 
     @Override
     public void writeToWorkRequestBuffer() throws RpcDataSerializationException{
-        ByteBuffer buffer = getWorkRequestProxy().getBuffer();
+        ByteBuffer buffer = workRequestProxy.getBuffer();
         // first write the serial version
         buffer.putLong(serialVersionId);
         // then write the list's size
@@ -48,6 +48,7 @@ public class InetSocketAddressListSerializer extends AbstractDataSerializer {
             // and finally put the port number
             buffer.putInt(address.getPort());
         }
+        buffer.flip();
     }
 
     @Override
@@ -55,7 +56,7 @@ public class InetSocketAddressListSerializer extends AbstractDataSerializer {
         // must reset this to avoid errors
         addresses = new ArrayList<>();
         // get request buffer
-        ByteBuffer buffer = getWorkRequestProxy().getBuffer();
+        ByteBuffer buffer = workRequestProxy.getBuffer();
         // check the serial version id
         long receivedSerialVersionId = buffer.getLong();
         throwIfSerialVersionInvalid(serialVersionId, receivedSerialVersionId);
