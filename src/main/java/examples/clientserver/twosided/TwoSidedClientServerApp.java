@@ -5,6 +5,9 @@ import examples.clientserver.twosided.server.TwoSidedServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * An example application for client/server RDMA communications with SEND/RECV through jRCM.
+ */
 public class TwoSidedClientServerApp {
     private static final Logger logger = LoggerFactory.getLogger(TwoSidedClientServerApp.class.getSimpleName());
 

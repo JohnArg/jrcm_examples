@@ -13,6 +13,15 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A discovery service example application. The discovery service is
+ * used for server registration, deregistration,
+ * getting registered servers and getting a server's port
+ * by using it's IP. A client is also provided for
+ * connecting to the discovery service and invoking its
+ * API through RPCs. This example shows have can jRCM
+ * be used for RDMA RPCs with SEND/RECV.
+ */
 public class ServerDiscoveryRpcApp {
     private static final Logger logger = LoggerFactory.getLogger(ServerDiscoveryRpcApp.class.getSimpleName());
 
